@@ -22,8 +22,8 @@ var rnd *renderer.Render
 var db *sql.DB
 
 const (
-	dbUser     string = "root"   // MySQL username
-	dbPassword string = "123456" // MySQL password
+	dbUser     string = "root"     // MySQL username
+	dbPassword string = "password" // MySQL password
 	dbHost     string = "localhost"
 	dbPort     string = "3306"
 	dbName     string = "demo_todo"
