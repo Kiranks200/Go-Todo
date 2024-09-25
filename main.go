@@ -22,8 +22,8 @@ var rnd *renderer.Render
 var db *sql.DB
 
 const (
-	dbUser     string = "root"     // MySQL username
-	dbPassword string = "password" // MySQL password
+	dbUser     string = "root"   // MySQL username
+	dbPassword string = "123456" // MySQL password
 	dbHost     string = "localhost"
 	dbPort     string = "3306"
 	dbName     string = "demo_todo"
@@ -129,8 +129,7 @@ func updateTodo(w http.ResponseWriter, r *http.Request) {
 	_, err := db.Exec(query, t.Title, t.Completed, id)
 	if err != nil {
 		rnd.JSON(w, http.StatusInternalServerError, renderer.M{
-			"message": "Failed to update todo",
-			"error":   err,
+			"message": "Failed to update todo121",
 		})
 		return
 	}
@@ -154,14 +153,10 @@ func fetchTodos(w http.ResponseWriter, r *http.Request) {
 	var todos []todoModel
 	for rows.Next() {
 		var t todoModel
-		if err := rows.Scan(&t.ID, &t.Title, &t.Completed, &t.CreatedAt); err != nil {
-			rnd.JSON(w, http.StatusInternalServerError, renderer.M{
-				"message": "Failed to decode todos",
-				"error":   err,
-			})
-			return
+		err := rows.Scan(&t.ID, &t.Title, &t.Completed, &t.CreatedAt)
+		if err != nil {
+			todos = append(todos, t)
 		}
-		todos = append(todos, t)
 	}
 
 	rnd.JSON(w, http.StatusOK, renderer.M{
